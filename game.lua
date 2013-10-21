@@ -2,7 +2,7 @@ local sprite = require "sprite"
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 
-local image, enemy, enemy2, pers, pontuacao
+local image, enemy, enemy2, pers, pontuacao, hp, life = 3
 
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
@@ -15,6 +15,11 @@ function scene:createScene( event )
 image.x = display.contentWidth /2
 image.y = display.contentHeight / 2
 screenGroup:insert( image )
+
+	hp = display.newImage("NinjaFull.png")
+	hp.x = 0
+	screenGroup:insert( hp) 
+	
 
 local score = 0 
  pontuacao = display.newText(score, display.contentWidth, 0, native.systemFontBold,36)
@@ -35,6 +40,7 @@ local sequenceData = {
                 { name="seq2", sheet=sheet2, start=1, count=3, time=500, loopCount=0 }
                 }
  pers = display.newSprite(sheet1, sequenceData)
+ pers.hp = 3
 pers.x = display.contentWidth/2 + 128
 pers.y = display.contentHeight/2
 pers:play()
@@ -44,12 +50,14 @@ pers:play()
 enemy.hp =3
 enemy.x =  math.random(enemy.width/2, display.contentWidth - enemy.width)
 enemy.y = math.random(enemy.height/2, display.contentHeight - enemy.height)
+enemy.cd = 5000
 	screenGroup:insert( enemy )
 	
 	 enemy2 = display. newImage("enemy.png")
 enemy2.x =  math.random(enemy2.width/2, display.contentWidth - enemy2.width)
 enemy2.y = math.random(enemy2.height/2, display.contentHeight - enemy2.height)
 enemy2.hp = 3
+enemy2.cd = 5000
 screenGroup:insert( enemy2 )
 
 	
@@ -88,6 +96,7 @@ local morte_mp3= audio.loadSound("morte.mp3")
 	
 	function enemy:tap( event)
 	transition.to(pers,{time=300, x = enemy.x -40, y = enemy.y, onComplete = punch()})
+	enemy.cd =5000
 	audio.play(soco_mp3)
 	enemy.hp = enemy.hp - 1
 	timer.performWithDelay( 600, walk )
@@ -100,7 +109,8 @@ local morte_mp3= audio.loadSound("morte.mp3")
 end
 
 function enemy2:tap( event)
-	transition.to(pers,{time=300, x = enemy2.x -40, y = enemy2.y, onComplete =punch()}) 
+	transition.to(pers,{time=300, x = enemy2.x -40, y = enemy2.y, onComplete =punch()})
+	enemy2.cd =5000
 	audio.play(soco_mp3)
 	enemy2.hp = enemy2.hp -1
 	timer.performWithDelay( 600, walk )
@@ -111,8 +121,51 @@ function enemy2:tap( event)
 	end
 end
 
+function hitNinja()
+print("Hitando o ninja, com o life" + life)
+	if(life == 0) then
+	hp:removeSelf()
+	hp = display.newImage("NinjaDied.png")
+	print("Trocou a Image" + life)
+	storyboard.gotoScene( "gameOver", "fade", 800  )
+	
+	end
+	if (life == 3) then
+	hp:removeSelf()
+	life = life - 1
+	hp = display.newImage("NinjaHP2.png")
+	print("Trocou a Image" + life)
+	end
+	
+	if (life == 2) then
+	hp:removeSelf()
+	life = life-1
+	hp = display.newImage("NinjaHP1.png")
+	print("Trocou a Image" + life)
+	end
+	
+
+end
+local timestage = 60
+ local timestamp = display.newText(timestage, display.contentWidth/2, 0, native.systemFontBold,36)
+timestamp:setTextColor(255,255,255)
+screenGroup:insert( timestamp )
+
+function goEnemys()
+
+print(timestage)
+timestage = timestage -1
+timestamp.text = timestage
+
+end
+timer.performWithDelay(1000,goEnemys,60)
+timer.performWithDelay(5000,goEnemys,60)
+
+
 enemy:addEventListener("tap", enemy)
 enemy2:addEventListener("tap", enemy2)
+
+
 
 	
 end
