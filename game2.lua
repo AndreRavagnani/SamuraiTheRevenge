@@ -12,7 +12,7 @@ local scene = storyboard.newScene()
 function scene:createScene( event )
 	local screenGroup = self.view
 
-	 image = display.newImage("bg.png",true)
+	 image = display.newImage("Scene 2.png",true)
 image.x = display.contentWidth /2
 image.y = display.contentHeight / 2
 screenGroup:insert( image )
@@ -23,14 +23,16 @@ stageClear.y = display.contentHeight / 2
 stageClear.isVisible = false
 screenGroup:insert( stageClear )
 
+ local timestamp = display.newText(timestage, display.contentWidth/2, 0, native.systemFontBold,36)
+timestamp:setTextColor(255,255,255)
+screenGroup:insert( timestamp )
 
 	hp = display.newImage("NinjaFull.png")
 	hp.x = 0
 	screenGroup:insert( hp) 
 	
 
-local score = 0 
- pontuacao = display.newText(score, display.contentWidth, 0, native.systemFontBold,36)
+pontuacao = event.params.pontos
 pontuacao:setTextColor(255,255,255)
 screenGroup:insert( pontuacao )
 
@@ -81,11 +83,11 @@ enemy2.cd = 5000
 screenGroup:insert( enemy2 )
 
 	
-end
+--end
 
 
 
-function scene:enterScene( event )
+--function scene:enterScene( event )
 	local screenGroup = self.view
 	local function restartEnemy (event)
 	enemy.hp =3
@@ -175,22 +177,7 @@ print("Hitando o ninja, com o life" + life)
 
 end
 
- local timestamp = display.newText(timestage, display.contentWidth/2, 0, native.systemFontBold,36)
-timestamp:setTextColor(255,255,255)
-screenGroup:insert( timestamp )
 
-
-function nextStage()
-stageClear.isVisible = false
-timestamp.isVisible = false
-storyboard.gotoScene( "game2", {
-effect = "fade",
-time = 800,
-params = {
-pontos = pontuacao
-}
-})
-end
 
 function goEnemys()
 
@@ -198,13 +185,12 @@ print(timestage)
 timestage = timestage -1
 timestamp.text = timestage
 
-if(timestage <= 0 ) then
+if(timestage == 0 ) then
 stageClear.isVisible = true;
---stageClear:toFront()
+stageClear:toFront()
 pers.isVisible = false
 enemy.isVisible = false
 enemy2.isVisible = false
-timer.performWithDelay(3000,nextStage)
 end
 
 
@@ -223,12 +209,13 @@ end
 function scene:exitScene( event )
 	local group = self.view
 
+		
 end
 
 
 function scene:destroyScene( event )
 	local group = self.view
-
+	
 	
 end
 

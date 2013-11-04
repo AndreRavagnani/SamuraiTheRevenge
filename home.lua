@@ -17,8 +17,7 @@ local image
 local function onSceneTouch( self, event )
 	if event.phase == "began" then
 		print( "Image Touched ")
-		storyboard.gotoScene( "game", "slideLeft", 800  )
-		
+		storyboard.gotoScene( "game", "slideLeft", 800  )		
 		return true
 	end
 end
