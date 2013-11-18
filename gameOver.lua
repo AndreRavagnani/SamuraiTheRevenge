@@ -17,7 +17,7 @@ local image
 local function onSceneTouch( self, event )
 	if event.phase == "began" then
 		print( "Image Touched ")
-		storyboard.gotoScene( "game", "slideLeft", 800  )		
+		storyboard.gotoScene( "home", "slideLeft", 800  )		
 		return true
 	end
 end
@@ -39,8 +39,9 @@ end
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
 	
+	storyboard.purgeScene("game2")
 	print( "1: enterScene event" )
-	storyboard.purgeScene("gameOver")
+	
 	-- Update Lua memory text display
 		image:addEventListener( "touch", image )
 		

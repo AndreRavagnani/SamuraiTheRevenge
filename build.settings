@@ -30,6 +30,16 @@ settings = {
 		}
 	},
 	
+	android = {
+	 plist = {
+	 UIAppFonts =
+	 {
+	 "CaesarDressing-Regular.ttf"
+	 },
+	 UIApplicationExitsOnSuspend = true
+	 },
+	 }
+	
 	--[[
 	-- Android permissions
 
