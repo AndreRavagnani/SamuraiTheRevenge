@@ -2,7 +2,7 @@ local sprite = require "sprite"
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 
-local image, enemy, enemy2, pers, pontuacao, hp, life = 3, stageClear
+local image, enemy, enemy2, pers, pontuacao, hp, life = 3, stageClear, font
 local timestage = 60
 
 local storyboard = require( "storyboard" )
@@ -11,6 +11,12 @@ local scene = storyboard.newScene()
 
 function scene:createScene( event )
 	local screenGroup = self.view
+	
+	if "Win" == system.getInfo( "platformName" ) then
+    font = "Caesar Dressing"
+elseif "Android" == system.getInfo( "platformName" ) then
+    PTSERIF = "CaesarDressing-Regular"
+	end
 
 image = display.newImage("bg.png",true)
 image.x = display.contentWidth /2
@@ -18,7 +24,7 @@ image.y = display.contentHeight / 2
 screenGroup:insert( image )
  
 hp = display.newImage("NinjaFull.png")
-hp.x = 0
+hp.x = 5
 screenGroup:insert( hp) 
 	
 local sheetDataEnemy = { width=39, height=119, numFrames=3}
@@ -103,7 +109,7 @@ enemy2.isVisible = true
 timestage = 60
 
 local score = 0 
- pontuacao = display.newText(score, display.contentWidth, 0, native.systemFontBold,36)
+ pontuacao = display.newText(score, display.contentWidth-10, 0, font,36)
 pontuacao:setTextColor(255,255,255)
 screenGroup:insert( pontuacao )
 
@@ -240,7 +246,7 @@ print("Hitando o ninja, com o life" + life)
 
 end
 
- local timestamp = display.newText(timestage, display.contentWidth/2, 0, native.systemFontBold,36)
+ local timestamp = display.newText(timestage, display.contentWidth/2, 0, font,36)
 timestamp:setTextColor(255,255,255)
 screenGroup:insert( timestamp )
 
