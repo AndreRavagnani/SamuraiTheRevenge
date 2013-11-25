@@ -2,7 +2,7 @@ local sprite = require "sprite"
 local storyboard = require( "storyboard" )
 local scene = storyboard.newScene()
 
-local image, enemy, enemy2, pers, pontuacao, hp, life = 3, stageClear
+local image, enemy, enemy2, pers, pontuacao, hp, life = 3, stageClear, font
 local timestage = 60
 
 local storyboard = require( "storyboard" )
@@ -11,19 +11,25 @@ local scene = storyboard.newScene()
 
 function scene:createScene( event )
 	local screenGroup = self.view
+	
+		if "Win" == system.getInfo( "platformName" ) then
+    font = "Caesar Dressing"
+else 
+    font = "CaesarDressing-Regular"
+	end
 
 	 image = display.newImage("Scene 2.png",true)
 image.x = display.contentWidth /2
 image.y = display.contentHeight / 2
 screenGroup:insert( image )
 
-	 stageClear = display.newImage("stageClear.png",true)
+	 stageClear = display.newImage("StageClear.png",true)
 stageClear.x = display.contentWidth /2
 stageClear.y = display.contentHeight / 2
 stageClear.isVisible = false
 screenGroup:insert( stageClear )
 
- local timestamp = display.newText(timestage, display.contentWidth/2, 0, "Caesar Dressing",36)
+ local timestamp = display.newText(timestage, display.contentWidth/2, 0, font,36)
 timestamp:setTextColor(255,255,255)
 screenGroup:insert( timestamp )
 
@@ -198,7 +204,6 @@ local morte_mp3= audio.loadSound("morte.mp3")
 	else
 		timer.performWithDelay( 600, walk2 )
 	end
-	timer.performWithDelay( 600, walk )
 	if( enemy.hp <=0) then
 	enemy:setSequence("down")
 	enemy:play()

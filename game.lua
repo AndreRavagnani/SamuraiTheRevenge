@@ -14,8 +14,8 @@ function scene:createScene( event )
 	
 	if "Win" == system.getInfo( "platformName" ) then
     font = "Caesar Dressing"
-elseif "Android" == system.getInfo( "platformName" ) then
-    PTSERIF = "CaesarDressing-Regular"
+else 
+    font = "CaesarDressing-Regular"
 	end
 
 image = display.newImage("bg.png",true)
@@ -113,7 +113,7 @@ local score = 0
 pontuacao:setTextColor(255,255,255)
 screenGroup:insert( pontuacao )
 
-	 stageClear = display.newImage("stageClear.png",true)
+	 stageClear = display.newImage("StageClear.png",true)
 stageClear.x = display.contentWidth /2
 stageClear.y = display.contentHeight / 2
 stageClear.isVisible = false
@@ -185,7 +185,6 @@ local morte_mp3= audio.loadSound("morte.mp3")
 	else
 		timer.performWithDelay( 600, walk2 )
 	end
-	timer.performWithDelay( 600, walk )
 	if( enemy.hp <=0) then
 	enemy:setSequence("down")
 	enemy:play()
