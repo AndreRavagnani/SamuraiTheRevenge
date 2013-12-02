@@ -27,7 +27,7 @@ end
 function scene:createScene( event )
 	local screenGroup = self.view
 	
-	image = display.newImage( "GameOver.png" )
+	image = display.newImage( "Final.png" )
 	screenGroup:insert( image )
 	
 	image.touch = onSceneTouch
@@ -38,7 +38,6 @@ end
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
-	storyboard.purgeScene("game")
 	storyboard.purgeScene("game2")
 	print( "1: enterScene event" )
 	
